@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.JApplet;
 import javax.swing.JFrame;
@@ -13,8 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class BrickBreaker extends JApplet {
-	public final static int GAME_WIDTH = 480;
-	public final static int GAME_HEIGHT = 640;
+	
+	//set the size of the game window (setting static variables creates issues with different monitor sizes).
+	public final static int GAME_WIDTH = 580;
+	public final static int GAME_HEIGHT = 960;
+	
 	
 	private StartScreen startscreen;
 	private StagePanel gameScreen;
@@ -36,7 +40,7 @@ public class BrickBreaker extends JApplet {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		frame.setResizable(true);
+		frame.setResizable(false);
 
 	}
 	
@@ -69,9 +73,11 @@ public class BrickBreaker extends JApplet {
 		ImageSprite background;
 		public StartScreen()
 		{
+			//creates background for StartScreen
 			setLayout(null);
 			background = new ImageSprite(0,0,0,0,this.getClass().getResource("images/START SCREEN BACKGROUND.png"),true);
 			
+			//adds a mouse listener (primarily for click event)
 			MouseListener myMouseListener = new MyMouseListener();
 			addMouseListener(myMouseListener);
 			
@@ -86,6 +92,7 @@ public class BrickBreaker extends JApplet {
 		protected class MyMouseListener implements MouseListener {
 
 			@Override
+			//on the click event, the startScreen will be unloaded and the gameScreen loaded.
 			public void mouseClicked(MouseEvent e) {
 				loadGameScreen();
 			}
@@ -129,7 +136,8 @@ public class BrickBreaker extends JApplet {
 		PaddleClass paddle;
 		Ball ball;
 		Brick brick;
-		Brick[] bricks = new Brick[35];
+		//Brick[] bricks = new Brick[35];
+		ArrayList<Brick> bricks = new ArrayList<Brick>();
 		ImageSprite heart;
 		ImageSprite background;
 		
@@ -159,6 +167,7 @@ public class BrickBreaker extends JApplet {
 			Timer myTimer = new Timer(33, new MyTimerListener());
 			myTimer.start();
 
+			//for loop will create bricks on each row, with a different color based on health
 			for (int row = 0; row < numRow; row++) {
 				for (int col = 0; col < numCol; col++) {
 
@@ -183,8 +192,9 @@ public class BrickBreaker extends JApplet {
 
 					}
 
-					bricks[count] = new Brick(brickx + col * brickW, bricky
-							+ row * brickH, health, url);
+					//creates an array of bricks, given the input arguments
+					bricks.add(new Brick(brickx + col * brickW, bricky
+							+ row * brickH, health, url));
 
 					count++;
 				}
@@ -195,12 +205,18 @@ public class BrickBreaker extends JApplet {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 
-			// g.drawImage(background.img, 0, 0, this);
+			g.drawImage(background.img, 0, 0, this);
 			background.draw(g);
 			paddle.draw(g);
 			ball.draw(g);
-			for (int i = 0; i < bricks.length; i++) {
-				bricks[i].draw(g);
+			
+			for (int i = 0; i < bricks.size(); i++) {
+				
+				if (bricks.get(i) != null && bricks.get(i).health != 0)
+				{
+					bricks.get(i).draw(g);
+				}
+				
 			}
 
 			for (int i = 0; i < lives; i++) {
@@ -218,9 +234,9 @@ public class BrickBreaker extends JApplet {
 			}
 
 			@Override
-			public void mouseMoved(MouseEvent e) {
+			public void mouseMoved(MouseEvent mouse) {
 
-				paddle.x = e.getX();
+				paddle.x = mouse.getX();
 				if (moveWithPaddle == true) {
 					ball.setBallXY(paddle.x + 50, paddle.y - 30);
 
@@ -301,47 +317,54 @@ public class BrickBreaker extends JApplet {
 				if (ball.hitTestObject(paddle)) {
 					ball.reverseDirectionY();
 				}
+				
 				count = 0;
-				for (int count = 0; count < numCol * numRow; count++) {
-					if (ball.hitTestObject(bricks[count])) {
+				for (int count = 0; count < numCol * numRow; count++) 
+				{
+					if (bricks.get(count) != null && ball.hitTestObject(bricks.get(count)))
+					{
 						ball.reverseDirectionY();
-						bricks[count].health--;}
+						bricks.get(count).health--;}
 						
-						if (bricks[count].health == 5) {
-							bricks[count].blockColor(this.getClass()
+						if (bricks.get(count) != null && bricks.get(count).health == 5)
+						{
+							bricks.get(count).blockColor(this.getClass()
 									.getResource("images/Block5.png"));
 						}
 						
-						else if (bricks[count].health == 4)
+						else if (bricks.get(count) != null && bricks.get(count).health == 4)
 						{
-							bricks[count].blockColor(this.getClass()
+							bricks.get(count).blockColor(this.getClass()
 									.getResource("images/Block4.png"));
 						}
 						
-						else if (bricks[count].health == 3)
+						else if (bricks.get(count) != null && bricks.get(count).health == 3)
 						{
-							bricks[count].blockColor(this.getClass()
+							bricks.get(count).blockColor(this.getClass()
 									.getResource("images/Block3.png"));
 						}
 						
-						else if (bricks[count].health == 2)
+						else if (bricks.get(count) != null && bricks.get(count).health == 2)
 						{
-							bricks[count].blockColor(this.getClass()
+							bricks.get(count).blockColor(this.getClass()
 									.getResource("images/Block2.png"));
 						}
 						
-						else if (bricks[count].health == 1)
+						else if (bricks.get(count) != null && bricks.get(count).health == 1)
 						{
-							bricks[count].blockColor(this.getClass()
+							bricks.get(count).blockColor(this.getClass()
 									.getResource("images/Block.png"));
 						}
-
-						if (bricks[count].health == 0) {
-							bricks[count].x = -500;
-							bricks[count].y = -500;
-
+						
+						else
+						{
+							bricks.set(count, null);
 						}
-					}
+						
+				}
+
+						
+					
 				
 				if (lives == 0 )
 				{
@@ -350,7 +373,7 @@ public class BrickBreaker extends JApplet {
 					
 				}
 				
-			
+				//repaint() is important (without it, the game will not draw elements when needed)
 				repaint();
 
 			}

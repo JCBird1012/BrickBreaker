@@ -13,12 +13,16 @@ public class Brick extends ImageSprite
 	public int maxHealth;
 	public int health;
 	
+	//creates a new Brick
 	public Brick(int x, int y, int maxHealth, URL url)
 	{
 		super(x, y, 0, 0, url, false);
 		this.maxHealth = maxHealth;
 		health = maxHealth;
 	}
+	
+	
+	//sets the block color based on the URL passed
 	public void blockColor(URL url) 
 	{
 		img = new ImageIcon(url).getImage();
@@ -28,9 +32,5 @@ public class Brick extends ImageSprite
 		g2d.dispose();
 	}
 	
-	
-	
-		
-		
 	
 }
