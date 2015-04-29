@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -83,6 +82,7 @@ public class BrickBreaker extends JApplet {
 			
 		}
 		
+		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			background.draw(g);
@@ -202,6 +202,7 @@ public class BrickBreaker extends JApplet {
 
 		}
 
+		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 
