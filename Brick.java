@@ -31,6 +31,4 @@ public class Brick extends ImageSprite
 		g2d.drawImage(img, 0 , 0 , null);
 		g2d.dispose();
 	}
-	
-	
 }

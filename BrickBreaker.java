@@ -13,12 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class BrickBreaker extends JApplet {
-	
+
 	//set the size of the game window (setting static variables creates issues with different monitor sizes).
 	public final static int GAME_WIDTH = 580;
 	public final static int GAME_HEIGHT = 960;
-	
-	
+
+
 	private StartScreen startscreen;
 	private StagePanel gameScreen;
 	public boolean gameOver;
@@ -42,7 +42,7 @@ public class BrickBreaker extends JApplet {
 		frame.setResizable(false);
 
 	}
-	
+
 	public void loadGameScreen()
 	{
 		gameScreen = new StagePanel();
@@ -51,9 +51,9 @@ public class BrickBreaker extends JApplet {
 		gameScreen.requestFocusInWindow();
 		invalidate();
 		validate();
-		
+
 	}
-	
+
 	public void loadStartScreen()
 	{
 		remove (gameScreen);
@@ -62,10 +62,10 @@ public class BrickBreaker extends JApplet {
 		startscreen.requestFocusInWindow();
 		invalidate();
 		validate();
-		
-	
+
+
 	}
-	
+
 	//Start Screen
 	public class StartScreen extends JPanel
 	{
@@ -75,20 +75,20 @@ public class BrickBreaker extends JApplet {
 			//creates background for StartScreen
 			setLayout(null);
 			background = new ImageSprite(0,0,0,0,this.getClass().getResource("images/START SCREEN BACKGROUND.png"),true);
-			
+
 			//adds a mouse listener (primarily for click event)
 			MouseListener myMouseListener = new MyMouseListener();
 			addMouseListener(myMouseListener);
-			
+
 		}
-		
+
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			background.draw(g);
-			
+
 		}
-		
+
 		protected class MyMouseListener implements MouseListener {
 
 			@Override
@@ -99,28 +99,28 @@ public class BrickBreaker extends JApplet {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				
-				
+
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				
-				
+
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
-				
+
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
-				
+
+
 			}
-			
+
 		}
 	}
 
@@ -136,11 +136,10 @@ public class BrickBreaker extends JApplet {
 		PaddleClass paddle;
 		Ball ball;
 		Brick brick;
-		//Brick[] bricks = new Brick[35];
 		ArrayList<Brick> bricks = new ArrayList<Brick>();
 		ImageSprite heart;
 		ImageSprite background;
-		
+
 
 		public StagePanel() {
 			this.setFocusable(true);
@@ -173,7 +172,7 @@ public class BrickBreaker extends JApplet {
 
 					URL url = null;
 					int health = 0;
-					
+
 					if (row == 0) {
 						url = this.getClass().getResource("images/Block5.png");
 						health = 5;
@@ -200,7 +199,8 @@ public class BrickBreaker extends JApplet {
 				}
 			}
 
-		}
+}
+
 
 		@Override
 		public void paintComponent(Graphics g) {
@@ -210,14 +210,14 @@ public class BrickBreaker extends JApplet {
 			background.draw(g);
 			paddle.draw(g);
 			ball.draw(g);
-			
+
 			for (int i = 0; i < bricks.size(); i++) {
-				
+
 				if (bricks.get(i) != null && bricks.get(i).health != 0)
 				{
 					bricks.get(i).draw(g);
 				}
-				
+
 			}
 
 			for (int i = 0; i < lives; i++) {
@@ -242,20 +242,20 @@ public class BrickBreaker extends JApplet {
 					ball.setBallXY(paddle.x + 50, paddle.y - 30);
 
 				}
-				
+
 				if (paddle.x + 150 >= 570)
 				{
 					paddle.x = 570 - 150;
-					
+
 				}
-			
+
 				if (paddle.x + 150 >= 570 && moveWithPaddle == true)
 				{
 					ball.setBallXY(paddle.x + 50, paddle.y - 30);
 				}
 				repaint();
-				
-				
+
+
 			}
 
 		}
@@ -318,62 +318,70 @@ public class BrickBreaker extends JApplet {
 				if (ball.hitTestObject(paddle)) {
 					ball.reverseDirectionY();
 				}
-				
+
+
 				count = 0;
+				boolean allBricksGone = true;
+				
 				for (int count = 0; count < numCol * numRow; count++) 
 				{
 					if (bricks.get(count) != null && ball.hitTestObject(bricks.get(count)))
 					{
 						ball.reverseDirectionY();
 						bricks.get(count).health--;}
-						
-						if (bricks.get(count) != null && bricks.get(count).health == 5)
-						{
-							bricks.get(count).blockColor(this.getClass()
-									.getResource("images/Block5.png"));
-						}
-						
-						else if (bricks.get(count) != null && bricks.get(count).health == 4)
-						{
-							bricks.get(count).blockColor(this.getClass()
-									.getResource("images/Block4.png"));
-						}
-						
-						else if (bricks.get(count) != null && bricks.get(count).health == 3)
-						{
-							bricks.get(count).blockColor(this.getClass()
-									.getResource("images/Block3.png"));
-						}
-						
-						else if (bricks.get(count) != null && bricks.get(count).health == 2)
-						{
-							bricks.get(count).blockColor(this.getClass()
-									.getResource("images/Block2.png"));
-						}
-						
-						else if (bricks.get(count) != null && bricks.get(count).health == 1)
-						{
-							bricks.get(count).blockColor(this.getClass()
-									.getResource("images/Block.png"));
-						}
-						
-						else
-						{
-							bricks.set(count, null);
-						}
-						
-				}
 
-						
-					
+					if (bricks.get(count) != null && bricks.get(count).health == 5)
+					{
+						bricks.get(count).blockColor(this.getClass()
+								.getResource("images/Block5.png"));
+					}
+
+					else if (bricks.get(count) != null && bricks.get(count).health == 4)
+					{
+						bricks.get(count).blockColor(this.getClass()
+								.getResource("images/Block4.png"));
+					}
+
+					else if (bricks.get(count) != null && bricks.get(count).health == 3)
+					{
+						bricks.get(count).blockColor(this.getClass()
+								.getResource("images/Block3.png"));
+					}
+
+					else if (bricks.get(count) != null && bricks.get(count).health == 2)
+					{
+						bricks.get(count).blockColor(this.getClass()
+								.getResource("images/Block2.png"));
+					}
+
+					else if (bricks.get(count) != null && bricks.get(count).health == 1)
+					{
+						bricks.get(count).blockColor(this.getClass()
+								.getResource("images/Block.png"));
+					}
+
+					else 
+					{
+						bricks.set(count, null);
+					}
+
+				}
 				
-				if (lives == 0 )
+				for (int i=0; i < bricks.size(); i++) 
+				{
+					  if (bricks.get(i) != null) 
+					  {
+					    allBricksGone = false;
+					    break;
+					  }
+				}
+				
+				if (lives == 0 || allBricksGone)
 				{
 					loadStartScreen();
 					ball.setBallXY(paddle.x + 50, paddle.y - 30);
-					
 				}
-				
+
 				//repaint() is important (without it, the game will not draw elements when needed)
 				repaint();
 
