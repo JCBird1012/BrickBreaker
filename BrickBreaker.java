@@ -1,12 +1,15 @@
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,7 +18,7 @@ import javax.swing.Timer;
 public class BrickBreaker extends JApplet {
 
 	//set the size of the game window (setting static variables creates issues with different monitor sizes).
-	public final static int GAME_WIDTH = 580;
+	public final static int GAME_WIDTH = 565;
 	public final static int GAME_HEIGHT = 960;
 
 
@@ -28,7 +31,7 @@ public class BrickBreaker extends JApplet {
 		add(startscreen);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		JFrame frame = new JFrame("Brick Breaker");
 		BrickBreaker myApplet = new BrickBreaker();
 		frame.add(myApplet);
@@ -40,6 +43,9 @@ public class BrickBreaker extends JApplet {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
+		Image icon = null;
+		icon = ImageIO.read(BrickBreaker.class.getResource("/images/Ball.png"));
+		frame.setIconImage(icon);
 
 	}
 
@@ -239,19 +245,19 @@ public class BrickBreaker extends JApplet {
 
 				paddle.x = mouse.getX();
 				if (moveWithPaddle == true) {
-					ball.setBallXY(paddle.x + 50, paddle.y - 30);
+					ball.setBallXY(paddle.x + 60, paddle.y - 30);
 
 				}
 
-				if (paddle.x + 150 >= 570)
+				if (paddle.x + 150 >= GAME_WIDTH)
 				{
-					paddle.x = 570 - 150;
+					paddle.x = GAME_WIDTH - 150;
 
 				}
 
-				if (paddle.x + 150 >= 570 && moveWithPaddle == true)
+				if (paddle.x + 150 >= GAME_WIDTH && moveWithPaddle == true)
 				{
-					ball.setBallXY(paddle.x + 50, paddle.y - 30);
+					ball.setBallXY(paddle.x + 60, paddle.y - 30);
 				}
 				repaint();
 
@@ -265,7 +271,7 @@ public class BrickBreaker extends JApplet {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				moveWithPaddle = false;
-				ball.y -= 5;
+				ball.y -= 15;
 
 			}
 
@@ -299,12 +305,12 @@ public class BrickBreaker extends JApplet {
 
 				}
 
-				if (ball.x >= GAME_WIDTH || ball.x <= 0) {
+				if (ball.x >= GAME_WIDTH - 15 || ball.x <= 0) {
 					ball.reverseDirectionX();
 
 				}
 
-				if (ball.y >= 450) {
+				if (ball.y >= GAME_HEIGHT) {
 					lives--;
 					moveWithPaddle = true;
 					ball.y = paddle.y;
@@ -315,7 +321,8 @@ public class BrickBreaker extends JApplet {
 					ball.reverseDirectionY();
 				}
 
-				if (ball.hitTestObject(paddle)) {
+				if (ball.hitObject(paddle)) 
+				{
 					ball.reverseDirectionY();
 				}
 
@@ -325,7 +332,7 @@ public class BrickBreaker extends JApplet {
 				
 				for (int count = 0; count < numCol * numRow; count++) 
 				{
-					if (bricks.get(count) != null && ball.hitTestObject(bricks.get(count)))
+					if (bricks.get(count) != null && ball.hitObject(bricks.get(count)))
 					{
 						ball.reverseDirectionY();
 						bricks.get(count).health--;}

@@ -37,7 +37,7 @@ public class ImageSprite {
 			
 	}
 	
-	public boolean hitTestObject(ImageSprite sp)
+	public boolean hitObject(ImageSprite sp)
 	{
 		int left1, left2;
 		int right1, right2;
@@ -58,10 +58,14 @@ public class ImageSprite {
 		bottom1 = y0 + height;
 		bottom2 = sp.y0 + sp.height;
 		
+		//controls hit detection for the y-axis
 		if (bottom1 < top2) return false;
 		if (top1 > bottom2) return false;
+		
+		//controls hit detection from the side (x-axis)
 		if (right1 < left2) return false;
 		if (left1 > right2) return false;
+		
 		return true;
 	}
 	
