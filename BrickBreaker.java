@@ -154,7 +154,7 @@ public class BrickBreaker extends JApplet {
 					"images/Paddle.png"));
 			ball = new Ball(ballx, bally, this.getClass().getResource(
 					"images/Ball.png"));
-			heart = new ImageSprite(570, 100, 0, 0, this.getClass()
+			heart = new ImageSprite(590, 100, 0, 0, this.getClass()
 					.getResource("images/Heart.png"), true);
 			background = new ImageSprite(0, 0, 0, 0, this.getClass()
 					.getResource("images/Background.png"), true);
@@ -227,7 +227,7 @@ public class BrickBreaker extends JApplet {
 			}
 
 			for (int i = 0; i < lives; i++) {
-				g.drawImage(heart.bimg, 390 + i * (heart.width + 20), 15, this);
+				g.drawImage(heart.bimg, 400 + i * (heart.width + 20), 15, this);
 
 			}
 
