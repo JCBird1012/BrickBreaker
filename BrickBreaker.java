@@ -23,7 +23,7 @@ public class BrickBreaker extends JApplet {
 
 
 	private StartScreen startscreen;
-	private StagePanel gameScreen;
+	private GamePanel gameScreen;
 	public boolean gameOver;
 
 	public BrickBreaker() {
@@ -51,13 +51,12 @@ public class BrickBreaker extends JApplet {
 
 	public void loadGameScreen()
 	{
-		gameScreen = new StagePanel();
+		gameScreen = new GamePanel();
 		remove (startscreen);
 		add (gameScreen);
 		gameScreen.requestFocusInWindow();
 		invalidate();
 		validate();
-
 	}
 
 	public void loadStartScreen()
@@ -68,8 +67,6 @@ public class BrickBreaker extends JApplet {
 		startscreen.requestFocusInWindow();
 		invalidate();
 		validate();
-
-
 	}
 
 	//Start Screen
@@ -130,7 +127,7 @@ public class BrickBreaker extends JApplet {
 		}
 	}
 
-	private class StagePanel extends JPanel {
+	private class GamePanel extends JPanel {
 		int x, y = 400, width = 120, height = 32, ballx, bally, ballW = 20,
 				ballH = 20, brickx = 0, bricky = 75, brickW = 80, brickH = 30,
 				numRow = 5, numCol = 7;
@@ -147,7 +144,7 @@ public class BrickBreaker extends JApplet {
 		ImageSprite background;
 
 
-		public StagePanel() {
+		public GamePanel() {
 			this.setFocusable(true);
 
 			paddle = new PaddleClass(x, y, this.getClass().getResource(
