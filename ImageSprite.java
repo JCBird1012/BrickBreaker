@@ -62,32 +62,14 @@ public class ImageSprite {
 		if (bottom1 < top2) return false;
 		if (top1 > bottom2) return false;
 		
-		//controls hit detection from the side (x-axis)
-		if (right1 < left2) return false;
-		if (left1 > right2) return false;
-		
-		return true;
-	}
-	
-	public boolean hitTestPoint(int x, int y)
-	{boolean isHit =  false;
-		
-		int globalToLocalX = x - this.x;
-		int globalToLocalY = y - this.y;
-		if (globalToLocalX > 0 && globalToLocalX < bimg.getWidth())
+		if (sp.getClass().getName() != "PaddleClass")
 		{
-			if (globalToLocalY > 0 && globalToLocalY < bimg.getHeight())
-			{
-				int color = bimg.getRGB(globalToLocalX, globalToLocalY);
-				int alpha = (color >> 24) & 0xff;
-				if (alpha > 0) 
-					
-				isHit = true;
-				
-			}
+			//controls hit detection from the side (x-axis)
+			if (right1 < left2) return false;
+			if (left1 > right2) return false;
 		}
 		
-	 return isHit;
+		return true;
 	}
 	
 	public void draw (Graphics g)

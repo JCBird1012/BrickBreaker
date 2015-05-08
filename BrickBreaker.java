@@ -166,8 +166,8 @@ public class BrickBreaker extends JApplet {
 			MouseListener myMouseListener = new MyMouseListener();
 			addMouseListener(myMouseListener);
 
-			Timer myTimer = new Timer(33, new MyTimerListener());
-			myTimer.start();
+			Timer gameTimer = new Timer(18, new MyTimerListener());
+			gameTimer.start();
 
 			//for loop will create bricks on each row, with a different color based on health
 			for (int row = 0; row < numRow; row++) {
@@ -371,7 +371,7 @@ public class BrickBreaker extends JApplet {
 
 				}
 				
-				for (int i=0; i < bricks.size(); i++) 
+				for (int i = 0; i < bricks.size(); i++) 
 				{
 					  if (bricks.get(i) != null) 
 					  {
