@@ -62,12 +62,9 @@ public class ImageSprite {
 		if (bottom1 < top2) return false;
 		if (top1 > bottom2) return false;
 		
-		if (sp.getClass().getName() != "PaddleClass")
-		{
-			//controls hit detection from the side (x-axis)
-			if (right1 < left2) return false;
-			if (left1 > right2) return false;
-		}
+		//controls hit detection from the side (x-axis)
+		if (right1 < left2) return false;
+		if (left1 > right2) return false;
 		
 		return true;
 	}
