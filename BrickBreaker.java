@@ -170,6 +170,13 @@ public class BrickBreaker extends JApplet {
 			gameTimer.start();
 
 			//for loop will create bricks on each row, with a different color based on health
+			
+			initalizeBricks();
+
+}
+
+		public void initalizeBricks()
+		{
 			for (int row = 0; row < numRow; row++) {
 				for (int col = 0; col < numCol; col++) {
 
@@ -201,9 +208,7 @@ public class BrickBreaker extends JApplet {
 					count++;
 				}
 			}
-
-}
-
+		}
 
 		@Override
 		public void paintComponent(Graphics g) {
@@ -383,7 +388,9 @@ public class BrickBreaker extends JApplet {
 				if (lives == 0 || allBricksGone)
 				{
 					loadStartScreen();
+					initalizeBricks();
 					ball.setBallXY(paddle.x + 50, paddle.y - 30);
+					lives = 3;
 				}
 
 				//repaint() is important (without it, the game will not draw elements when needed)
