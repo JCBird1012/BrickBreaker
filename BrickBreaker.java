@@ -229,7 +229,7 @@ public class BrickBreaker extends JApplet {
 			}
 
 			for (int i = 0; i < lives; i++) {
-				g.drawImage(heart.bimg, 400 + i * (heart.width + 20), 15, this);
+				g.drawImage(heart.bimg, 525 - i * (heart.width + 10), 15, this);
 
 			}
 
