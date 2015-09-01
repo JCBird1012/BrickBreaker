@@ -158,7 +158,7 @@ public class BrickBreaker extends JApplet {
 			moveWithPaddle = true;
 			gameOver = false;
 
-			lives = 3;
+			lives = 200;
 
 			MouseMotionListener myMouseMotion = new MyMouseMotion();
 			addMouseMotionListener(myMouseMotion);

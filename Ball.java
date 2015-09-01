@@ -18,7 +18,7 @@ public class Ball extends ImageSprite {
 	//postconditions: none
 	public void moveBall()
 	{
-		x += vx;
+		x -= vx;
 		y += vy;
 	}
 	
